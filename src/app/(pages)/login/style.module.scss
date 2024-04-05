@@ -1,0 +1,10 @@
+.page {
+  flex: 1;
+  background: white;
+  overflow: auto;
+
+  .content {
+    max-width: 400px;
+    margin: auto;
+  }
+}

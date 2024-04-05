@@ -1,0 +1,29 @@
+.OAuth {
+  text-align: center;
+
+  .or {
+    display: flex;
+    margin: auto;
+    gap: 1em;
+    align-items: center;
+    color: #ababab;
+
+    &::before,
+    &::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      display: block;
+      background-color: #ababab;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    gap: 1em;
+    margin: auto;
+    width: max-content;
+  }
+}

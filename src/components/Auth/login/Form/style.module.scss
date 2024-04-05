@@ -1,0 +1,38 @@
+.loginForm {
+  text-align: center;
+  color: #333;
+  padding: 2em 1em;
+
+  h1 {
+    font-weight: 300;
+  }
+
+  p {
+    color: #888;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    &::before {
+      content: "";
+      height: 1px;
+      width: 100%;
+      display: block;
+      background: linear-gradient(to left, transparent, #1c2a7b, transparent);
+    }
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    > * {
+      height: auto;
+      display: block;
+    }
+  }
+}
