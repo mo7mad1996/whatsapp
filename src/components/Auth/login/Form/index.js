@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -25,7 +26,12 @@ export default function LoginForm() {
   function submit(e) {
     e.preventDefault();
 
-    console.log(user);
+    axios
+      .post("/api/users/login", user)
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
   }
 
   // JSX
@@ -59,7 +65,12 @@ export default function LoginForm() {
           <Link href="/forget-password">Forget password?</Link>
         </div>
 
-        <Button loading={loading.toString()} variant="contained" type="submit">
+        <Button
+          loading={loading.toString()}
+          variant="contained"
+          type="submit"
+          disabled={loading}
+        >
           Login
         </Button>
       </form>

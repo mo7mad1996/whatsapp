@@ -15,7 +15,7 @@ export default function LoginPage() {
         <OAuth />
 
         <div className="mb-2">
-          new create a <Link href="/register">new Acout here</Link>.
+          You don't have an account yet? <Link href="/register">Sign up</Link>.
         </div>
       </div>
     </main>

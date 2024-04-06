@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 
+// axios
+import axios from "axios";
+
 // css
 import css from "./style.module.scss";
 
@@ -16,11 +19,19 @@ export default function RegisterForm() {
     email: "",
     password: "",
   });
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // methods
   function submit(e) {
     e.preventDefault();
+    setLoading(true);
+
+    // save the user
+    axios
+      .post("api/users/register", user)
+      .then(({ data }) => console.log(data))
+      .catch(({ response }) => console.log(response?.data))
+      .finally(() => setLoading(false));
   }
 
   // compponents
@@ -42,7 +53,12 @@ export default function RegisterForm() {
       <form onSubmit={submit}>
         {fileds}
 
-        <Button loading={loading.toString()} variant="contained" type="submit">
+        <Button
+          loading={loading.toString()}
+          variant="contained"
+          type="submit"
+          disabled={loading}
+        >
           Register
         </Button>
       </form>

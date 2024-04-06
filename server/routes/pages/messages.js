@@ -12,8 +12,10 @@ module.exports = (app) => {
   // POST
   /**
    * this route to create a new message
-   * accept request body like:
+   * @url /api/message
+   * @method POST
    *
+   * accept request body like:
    * @param  message: String,
    * @param  name: String,
    * @param  received: Boolean,
