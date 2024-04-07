@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon server",
+    "dev": "nodemon server localhost 3000",
     "start": "node server",
     "front": "next dev",
     "build": "next build",
@@ -17,6 +17,7 @@
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -30,5 +31,10 @@
   },
   "devDependencies": {
     "sass": "^1.74.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "/src/*"
+    ]
   }
 }

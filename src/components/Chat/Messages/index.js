@@ -6,12 +6,7 @@ import { useState } from "react";
 import css from "../style.module.css";
 
 export default function Messages() {
-  const [messages] = useState([
-    { received: false, name: "Ali1", createdAt: "app" },
-    { received: true, name: "Ali2", createdAt: "app" },
-    { received: false, name: "Ali", createdAt: "app" },
-    { received: false, name: "Ali", createdAt: "app" },
-  ]);
+  const [messages] = useState([]);
 
   // components
   const MessagesComponent = messages.map((message, i) => (

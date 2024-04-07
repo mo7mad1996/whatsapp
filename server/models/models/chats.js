@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const whatsappSchema = mongoose.Schema(
   {
-    message: String,
-    name: String,
+    between: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+    last_message: String,
     received: Boolean,
   },
   { timestamp: true }
 );
 
 //collection
-module.exports = mongoose.model("messages", whatsappSchema);
+module.exports = mongoose.model("chats", whatsappSchema);

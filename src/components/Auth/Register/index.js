@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 // axios
 import axios from "axios";
@@ -12,6 +13,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 export default function RegisterForm() {
+  const router = useRouter();
+
   // data
   const [user, setUser] = useState({
     username: "",
@@ -29,7 +32,7 @@ export default function RegisterForm() {
     // save the user
     axios
       .post("api/users/register", user)
-      .then(({ data }) => console.log(data))
+      .then(({ data }) => router.push("/"))
       .catch(({ response }) => console.log(response?.data))
       .finally(() => setLoading(false));
   }

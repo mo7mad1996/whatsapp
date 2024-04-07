@@ -25,6 +25,7 @@
 .sidebar__search {
   padding: 0.4em;
   background-color: #f6f6f6;
+  position: relative;
 }
 
 .sidebar__search__container {
@@ -46,6 +47,29 @@
   width: 100%;
   outline: none;
   background: none;
+}
+
+.sidebar__search .search_result {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  background-color: white;
+  z-index: 2;
+  padding: 0;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  text-align: left;
+  margin: 0;
+  left: 0;
+  border-radius: 5px;
+  list-style: none;
+}
+.sidebar__search .search_result li {
+  padding: 1em;
+  transition: 0.3s;
+}
+.sidebar__search .search_result li:hover {
+  background-color: #f6f6f6;
+  cursor: pointer;
 }
 
 .sidebar__chats {

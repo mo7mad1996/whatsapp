@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // css
 import css from "./style.module.scss";
@@ -19,19 +20,23 @@ export default function LoginForm() {
   // data
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [user, setUser] = useState({ username: "", password: "" });
+  const [savelogin, setLogin] = useState(true);
+
+  // router
+  const router = useRouter();
 
   // methods
   function submit(e) {
     e.preventDefault();
 
+    setLoading(true);
+
     axios
       .post("/api/users/login", user)
-      .then(({ data }) => {
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
+      .then(({ data }) => router.push("/"))
+      .catch((err) => console.log(err))
+      .finally((_) => setLoading(false));
   }
 
   // JSX
@@ -59,7 +64,12 @@ export default function LoginForm() {
         <div className={css.flex}>
           <FormControlLabel
             label="remember me"
-            control={<Checkbox defaultChecked />}
+            control={
+              <Checkbox
+                checked={savelogin}
+                onChange={() => setLogin((d) => !d)}
+              />
+            }
           />
 
           <Link href="/forget-password">Forget password?</Link>
