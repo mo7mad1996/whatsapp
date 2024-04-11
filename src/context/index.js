@@ -6,12 +6,16 @@ export const AppContext = createContext({});
 export function Provider({ children }) {
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState();
+  const [user_id, setUser_id] = useState("");
 
-  return (
-    <AppContext.Provider
-      value={{ chats, setChats, currentChat, setCurrentChat }}
-    >
-      {children}
-    </AppContext.Provider>
-  );
+  const state = {
+    chats,
+    setChats,
+    currentChat,
+    setCurrentChat,
+    user_id,
+    setUser_id,
+  };
+
+  return <AppContext.Provider value={state}>{children}</AppContext.Provider>;
 }

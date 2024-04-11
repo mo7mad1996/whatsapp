@@ -16,31 +16,44 @@ import Header from "./Header";
 import Messages from "./Messages";
 import Form from "./Form";
 
+// socket
+import { socket } from "~/io";
+
 export default function AppChat() {
   // context
   const { currentChat } = useContext(AppContext);
 
   // chat
-  const chat = currentChat ? <Chat id={currentChat} /> : <NoChatSelected />;
+  const chat = currentChat ? <Chat chat={currentChat} /> : <NoChatSelected />;
 
   // JSX
   return <div className={css.chat}>{chat}</div>;
 }
 
-// components
-function Chat({ id }) {
+// ..:: small components ::..
+function Chat({ chat }) {
   // data
   const [user, setUser] = useState({});
+  const { user_id } = useContext(AppContext);
 
-  // get user from id
+  // update header
+  // get user from chat.between
   useEffect(() => {
-    axois.get("/api/users/" + id).then(({ data }) => setUser(data));
-  }, [id]); // id from props
+    const users = chat.between.filter((u) => u._id != user_id);
+
+    if (users.length) setUser(users[0]);
+    else setUser({ name: chat.between[0].name + " (You)" });
+  }, [chat]); // chat from props
+
+  useEffect(() => {
+    // join to chat room
+    socket.emit("join", chat._id);
+  }, [chat]);
 
   // JSX
   return (
     <>
-      <Header name={user.name} lastseen={user.lastseen} />
+      <Header {...user} />
       <Messages />
       <Form />
     </>

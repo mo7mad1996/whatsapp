@@ -10,13 +10,33 @@ import IconButton from "@mui/material/IconButton";
 // css
 import css from "../style.module.css";
 
+// context
+import { useContext } from "react";
+import { AppContext } from "~/context";
+
+// socket
+import { socket } from "~/io";
+
 export default function ChatForm() {
   // data
   const [input, setInput] = useState("");
+  const { currentChat, user_id } = useContext(AppContext);
 
   // methods
   function submit(e) {
     e.preventDefault();
+
+    // create a new message
+    const message = {
+      message: input,
+      from: user_id,
+      chat_id: currentChat._id,
+    };
+
+    // save this message
+    socket.emit("send message", message, currentChat);
+
+    setInput("");
   }
 
   return (

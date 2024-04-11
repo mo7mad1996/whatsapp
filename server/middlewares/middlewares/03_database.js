@@ -8,6 +8,7 @@ mongoose
   .connect(process.env.DB_URI)
   .then(() => console.log("connected to database"))
   .catch((err) => {
+    console.error("can not connect to the database", err);
     throw err;
   });
 

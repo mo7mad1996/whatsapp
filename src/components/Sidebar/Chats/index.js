@@ -14,12 +14,16 @@ import SidebarChat from "./SidebarChat";
 // css
 import css from "../style.module.css";
 
+// socket
+import { socket } from "~/io";
+
 export default function SidebarChats() {
   // ruter
   const router = useRouter();
 
   // context
-  const { chats, setChats } = useContext(AppContext);
+  // const { chats, setChats } = useContext(AppContext);
+  const { chats, setChats } = useState([]);
 
   // data
   const [loading, setLoading] = useState(true);
@@ -28,14 +32,14 @@ export default function SidebarChats() {
   useEffect(() => {
     axios
       .get("/api/chats")
-      .then(({ data }) => setChats(data)) // set user chats
-      .catch(() => router.push("/login")) // no Auth
+      // .then(({ data }) => setChats(data)) // set user chats
+      .catch((err) => console.log(err)) // no Auth
       .finally(() => setLoading(false)); // reset loading to false
   }, []);
 
   // components
-  const ChatsComponent = chats.map((el) => <SidebarChat key={el._id} />);
-  const isChats = ChatsComponent.length ? chats : <NoChats />;
+  const ChatsComponent = [].map((el) => <SidebarChat key={el._id} {...el} />);
+  const isChats = ChatsComponent.length ? ChatsComponent : <NoChats />;
 
   // JSX
   return (

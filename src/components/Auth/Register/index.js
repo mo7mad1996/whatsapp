@@ -32,9 +32,8 @@ export default function RegisterForm() {
     // save the user
     axios
       .post("api/users/register", user)
-      .then(({ data }) => router.push("/"))
-      .catch(({ response }) => console.log(response?.data))
-      .finally(() => setLoading(false));
+      .then(() => router.push("/"))
+      .catch(({ response }) => console.error(response?.data));
   }
 
   // compponents

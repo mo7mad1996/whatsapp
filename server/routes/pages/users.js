@@ -29,14 +29,6 @@ module.exports = (app) => {
     create_token(user, res);
   });
 
-  app.get("/:id", (req, res) => {
-    let id = req.params.id;
-
-    Users.findById(id)
-      .then((data) => res.json(data))
-      .catch((err) => res.status(500).send(err));
-  });
-
   // register
   app.post("/register", async (req, res) => {
     // 1) genrate salt to hash password
@@ -84,19 +76,32 @@ module.exports = (app) => {
       .then((d) => res.json(d));
   });
 
+  app.get("/me", (req, res) => res.send(req.user?._id));
+
+  app.get("/:id", (req, res) => {
+    let id = req.params.id;
+
+    Users.findById(id)
+      .then((data) => res.json(data))
+      .catch((err) => res.status(500).send(err));
+  });
+
   // must return
   return app;
 };
 
 function create_token(user, res) {
+  // create a token
   const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1day",
   });
 
+  // set a token
   res.cookie("token", token, {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // One day
   });
 
-  res.send(token);
+  // redirect to /
+  res.json({ token });
 }

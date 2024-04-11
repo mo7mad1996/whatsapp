@@ -42,7 +42,9 @@ export default function SidebarHeader() {
 
   // methods
   function startChat(id) {
-    setCurrentChat(id);
+    axios.post("/api/chats/to", { id }).then(({ data }) => {
+      setCurrentChat(data);
+    });
 
     setSearch("");
   }

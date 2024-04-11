@@ -1,12 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // css
 import css from "../style.module.css";
 
+// socket
+import { socket } from "~/io";
+
+// context
+import { AppContext } from "~/context";
+import { useContext } from "react";
+
 export default function Messages() {
-  const [messages] = useState([]);
+  // data
+  const [messages, updateMessage] = useState([]);
+  const { user_id, currentChat } = useContext(AppContext);
+
+  // on create component
+  useEffect(() => {
+    socket.on("update active chat", (msg) => {
+      // create a template
+      const newMsg = {
+        received: user_id !== msg.from._id,
+        message: msg.message,
+        createdAt: msg.createdAt,
+      };
+
+      updateMessage((prevMessages) => [...prevMessages, newMsg]);
+    });
+  }, []);
+
+  useEffect(() => {
+    updateMessage(
+      currentChat.messages.map((msg) => ({
+        received: user_id !== msg.from,
+        message: msg.message,
+        createdAt: msg.createdAt,
+      }))
+    );
+
+    console.log(currentChat, user_id);
+  }, [currentChat]);
 
   // components
   const MessagesComponent = messages.map((message, i) => (
@@ -21,11 +56,10 @@ function Message({ message }) {
   return (
     <p
       className={`${css.chat__message} ${
-        message.received && css.chat__reciever
+        !message.received && css.chat__reciever
       }`}
     >
-      <span className={css.chat__name}>{message.name}</span>
-      {message.message}
+      <span>{message.message}</span>
       <span className={css.chat__timestamp}>{message.createdAt}</span>
     </p>
   );

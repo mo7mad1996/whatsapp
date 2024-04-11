@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const whatsappSchema = mongoose.Schema(
+const schema = mongoose.Schema(
   {
-    between: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-    last_message: String,
-    received: Boolean,
+    between: [{ type: mongoose.Types.ObjectId, ref: "user" }],
+    last_message: { type: mongoose.Types.ObjectId, ref: "messages" },
+    messages: [{ type: mongoose.Types.ObjectId, ref: "messages" }],
   },
   { timestamp: true }
 );
 
 //collection
-module.exports = mongoose.model("chats", whatsappSchema);
+module.exports = mongoose.model("chats", schema);

@@ -34,9 +34,8 @@ export default function LoginForm() {
 
     axios
       .post("/api/users/login", user)
-      .then(({ data }) => router.push("/"))
-      .catch((err) => console.log(err))
-      .finally((_) => setLoading(false));
+      .then(() => router.push("/"))
+      .catch((err) => console.error(err));
   }
 
   // JSX

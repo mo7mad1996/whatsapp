@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
 // database
@@ -8,22 +7,32 @@ const Users = mongoose.model("user");
 module.exports = (app) => {
   // GET
   app.get("/", (req, res) => {
-    // get user
-    const token = req.cookies.token;
+    const { _id } = req.user;
 
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-
-    if (!user) {
-      return res.status(401).send("please, login!");
-    }
-    const { _id } = user;
     Users.findById(_id)
       .select("chats")
       .populate("chats")
-      .then((d) => console.log(d));
+      .then(({ chats }) => res.json(chats));
+  });
 
-    // return chats
-    res.json([]);
+  app.post("/to", async (req, res) => {
+    const from_id = req.user._id;
+    const to_id = req.body.id;
+
+    const between = [from_id, to_id];
+
+    const chat = await Chats.findOne({
+      between: { $elemMatch: { $in: between } },
+    })
+      .populate("between")
+      .populate("messages");
+
+    console.clear();
+    console.log(between);
+    console.log(chat.between);
+
+    if (chat) res.json(chat);
+    else Chats.create({ between }).then((d) => res.json(d));
   });
 
   // must return
