@@ -23,7 +23,7 @@ module.exports = (socket, io) => {
   socket.on("get messages", (id, cb) => {
     cb();
   });
-  socket.on("send message", async (msg, chat) => {
+  socket.on("send message", async (msg, chat, cb) => {
     // 1) create a new message
     const mess = await Messages.create(msg);
     const message = await mess.populate("from");
@@ -39,5 +39,6 @@ module.exports = (socket, io) => {
 
     io.to(chat._id).emit("update active chat", message); // update active chat
     sockets.forEach((u) => socket.to(u).emit("new message", message, chat._id)); // update sidebar
+    cb(message, chat._id);
   });
 };

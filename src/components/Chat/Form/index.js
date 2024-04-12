@@ -34,7 +34,22 @@ export default function ChatForm() {
     };
 
     // save this message
-    if (input) socket.emit("send message", message, currentChat);
+    if (input.trim())
+      socket.emit("send message", message, currentChat, (message, id) => {
+        setChats((prevChats) => {
+          const index = prevChats.findIndex((c) => c._id === id);
+
+          if (index !== -1) {
+            const updatedChat = { ...prevChats[index], last_message: message };
+            const updatedChats = [
+              updatedChat,
+              ...prevChats.slice(0, index),
+              ...prevChats.slice(index + 1),
+            ];
+            return updatedChats;
+          }
+        });
+      });
 
     setInput("");
   }

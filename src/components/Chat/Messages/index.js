@@ -46,7 +46,11 @@ export default function Messages() {
     <Message key={i} message={message} />
   ));
 
-  return <div className={css.chat__body}>{MessagesComponent}</div>;
+  return (
+    <div className={css.chat__body}>
+      <div className={css.chat__content}>{MessagesComponent}</div>
+    </div>
+  );
 }
 
 // ..:: components ::..
