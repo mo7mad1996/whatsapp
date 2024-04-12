@@ -11,8 +11,19 @@ module.exports = (app) => {
 
     Users.findById(_id)
       .select("chats")
-      .populate("chats")
-      .then(({ chats }) => res.json(chats));
+      .populate({
+        path: "chats",
+        populate: ["last_message", "between", "messages"],
+      })
+      .then(({ chats }) =>
+        res.json(
+          chats.sort((a, b) => {
+            const updatedAtA = a.updatedAt;
+            const updatedAtB = b.updatedAt;
+            return new Date(updatedAtB) - new Date(updatedAtA); // Sort in descending order
+          })
+        )
+      );
   });
 
   app.post("/to", async (req, res) => {
@@ -22,17 +33,20 @@ module.exports = (app) => {
     const between = [from_id, to_id];
 
     const chat = await Chats.findOne({
-      between: { $elemMatch: { $in: between } },
+      between: { $all: between },
     })
       .populate("between")
       .populate("messages");
 
-    console.clear();
-    console.log(between);
-    console.log(chat.between);
-
     if (chat) res.json(chat);
-    else Chats.create({ between }).then((d) => res.json(d));
+    else {
+      const chat = await Chats.create({ between });
+
+      Users.updateMany(
+        { _id: { $in: between } },
+        { $push: { chats: chat._id } }
+      ).then(() => res.json(chat));
+    }
   });
 
   // must return

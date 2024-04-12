@@ -9,10 +9,13 @@ export function Provider({ children }) {
   const [user_id, setUser_id] = useState("");
 
   const state = {
+    // chats
     chats,
     setChats,
     currentChat,
     setCurrentChat,
+
+    // user
     user_id,
     setUser_id,
   };

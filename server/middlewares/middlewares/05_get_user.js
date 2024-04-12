@@ -1,9 +1,7 @@
 const jwt = require("jsonwebtoken");
 const auth_pages = ["/login", "/register"];
 
-module.exports = (app) => {
-  app.use(middleware);
-};
+module.exports = (app) => app.use(middleware);
 
 function middleware(req, res, next) {
   const token = req.cookies.token;

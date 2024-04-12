@@ -20,7 +20,7 @@ import { socket } from "~/io";
 export default function ChatForm() {
   // data
   const [input, setInput] = useState("");
-  const { currentChat, user_id } = useContext(AppContext);
+  const { currentChat, user_id, setChats, chats } = useContext(AppContext);
 
   // methods
   function submit(e) {
@@ -34,16 +34,18 @@ export default function ChatForm() {
     };
 
     // save this message
-    socket.emit("send message", message, currentChat);
+    if (input) socket.emit("send message", message, currentChat);
 
     setInput("");
   }
 
+  // JSX
   return (
     <div className={css.chat__footer}>
       <IconButton>
         <MdInsertEmoticon />
       </IconButton>
+
       <form onSubmit={submit}>
         <input
           value={input}
@@ -55,6 +57,7 @@ export default function ChatForm() {
         />
         <button type="submit">Send a message</button>
       </form>
+
       <IconButton>
         <MdMic />
       </IconButton>

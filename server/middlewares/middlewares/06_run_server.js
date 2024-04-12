@@ -1,5 +1,6 @@
 const next = require("next");
 const http = require("http");
+const mongoose = require("mongoose");
 const socketio = require("socket.io");
 
 const IO = require("../../IO");
@@ -10,6 +11,9 @@ const dev = process.env.NODE_ENV !== "production";
 // next.js
 const next_server = next({ dev });
 const handler = next_server.getRequestHandler();
+
+// DB
+const User = mongoose.model("user");
 
 module.exports = (app) => {
   next_server
@@ -24,11 +28,12 @@ module.exports = (app) => {
       // socket.io server
       const io = socketio(server);
 
-      io.use(async (socket, next) => {
-        const user_id = socket.handshake.user_id;
+      io.use((socket, next) => {
+        const user_id = socket.handshake.auth.user_id;
+
         if (user_id) {
           socket.user_id = user_id;
-          await User.findByIdAndUpdate(id, { socket_id: socket.id });
+          socket.join(user_id);
         }
 
         next();

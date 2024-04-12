@@ -2,10 +2,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
-const user = require("../../models/models/user");
 
 // database
 const Users = mongoose.model("user");
+const Chats = mongoose.model("chats");
 
 /**
  * this route should be
@@ -51,25 +51,12 @@ module.exports = (app) => {
   });
 
   app.post("/search", (req, res) => {
-    user
-      .find()
+    Users.find()
       .find({
         $or: [
-          {
-            name: {
-              $regex: req.body.search,
-            },
-          },
-          {
-            username: {
-              $regex: req.body.search,
-            },
-          },
-          {
-            email: {
-              $regex: req.body.search,
-            },
-          },
+          { name: { $regex: req.body.search } },
+          { username: { $regex: req.body.search } },
+          { email: { $regex: req.body.search } },
         ],
       })
       .select("name")
@@ -89,8 +76,7 @@ module.exports = (app) => {
   // must return
   return app;
 };
-
-function create_token(user, res) {
+async function create_token(user, res) {
   // create a token
   const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1day",
@@ -101,6 +87,9 @@ function create_token(user, res) {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // One day
   });
+
+  const chat = await Chats.create({ between: [user._id, user._id] });
+  await Users.findByIdAndUpdate(user._id, { $push: { chats: chat._id } });
 
   // redirect to /
   res.json({ token });

@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const schema = mongoose.Schema(
   {
-    from: { type: mongoose.Types.ObjectId, ref: "user" },
-    chat_id: { type: mongoose.Types.ObjectId, ref: "chats" },
+    from: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    chat_id: { type: mongoose.Schema.Types.ObjectId, ref: "chats" },
     message: { type: String },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 //collection

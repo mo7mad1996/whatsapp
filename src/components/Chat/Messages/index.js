@@ -39,8 +39,6 @@ export default function Messages() {
         createdAt: msg.createdAt,
       }))
     );
-
-    console.log(currentChat, user_id);
   }, [currentChat]);
 
   // components
@@ -60,7 +58,7 @@ function Message({ message }) {
       }`}
     >
       <span>{message.message}</span>
-      <span className={css.chat__timestamp}>{message.createdAt}</span>
+      <span className={css.chat__timestamps}>{message.createdAt}</span>
     </p>
   );
 }

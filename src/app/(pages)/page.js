@@ -21,7 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     axios.get("/api/users/me").then(({ data }) => {
-      socket.user_id = data;
+      socket.auth = { user_id: data };
       socket.connect();
 
       // context user id
