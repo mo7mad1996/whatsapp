@@ -42,8 +42,11 @@ module.exports = (app) => {
       ...req.body,
       password,
     })
-      .then((user) => {
-        create_token(user, res);
+      .then(async (user) => {
+        const chat = await Chats.create({ between: [user._id, user._id] });
+        Users.findByIdAndUpdate(user._id, { $push: { chats: chat._id } }).then(
+          () => create_token(user, res)
+        );
       })
       .catch(() =>
         res.status(500).send("can't add new user, do you have account?")
@@ -76,7 +79,7 @@ module.exports = (app) => {
   // must return
   return app;
 };
-async function create_token(user, res) {
+function create_token(user, res) {
   // create a token
   const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1day",
@@ -87,10 +90,6 @@ async function create_token(user, res) {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // One day
   });
-
-  const chat = await Chats.create({ between: [user._id, user._id] });
-  await Users.findByIdAndUpdate(user._id, { $push: { chats: chat._id } });
-
   // redirect to /
   res.json({ token });
 }
