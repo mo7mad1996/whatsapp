@@ -1,0 +1,23 @@
+.header {
+  background-color: #c6baad;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.4em;
+
+  nav {
+    flex: 1;
+
+    &:last-of-type {
+      text-align: right;
+    }
+  }
+
+  a {
+    padding: 1em;
+    display: inline-flex;
+    font-weight: bold;
+
+    align-items: center;
+    gap: 0.4em;
+  }
+}

@@ -64,7 +64,9 @@ export default function SidebarChats() {
 
   // JSX
   return (
-    <div className={css.sidebar__chats}>{loading ? <Loading /> : isChats}</div>
+    <div className={css.sidebar__chats}>
+      <div className={css.chats}>{loading ? <Loading /> : isChats}</div>
+    </div>
   );
 }
 

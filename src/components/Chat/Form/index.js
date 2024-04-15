@@ -2,13 +2,16 @@
 import { useState } from "react";
 
 // icons
-import { MdInsertEmoticon, MdMic } from "react-icons/md";
+import { MdAttachFile } from "react-icons/md";
+import { IoMdSend } from "react-icons/io";
+
+import { styled } from "@mui/material/styles";
 
 // UI
 import IconButton from "@mui/material/IconButton";
 
 // css
-import css from "../style.module.css";
+import css from "../style.module.scss";
 
 // context
 import { useContext } from "react";
@@ -16,6 +19,19 @@ import { AppContext } from "~/context";
 
 // socket
 import { socket } from "~/io";
+
+// style
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 export default function ChatForm() {
   // data
@@ -56,12 +72,8 @@ export default function ChatForm() {
 
   // JSX
   return (
-    <div className={css.chat__footer}>
-      <IconButton>
-        <MdInsertEmoticon />
-      </IconButton>
-
-      <form onSubmit={submit}>
+    <form onSubmit={submit}>
+      <div className={css.edit}>
         <input
           value={input}
           onChange={(e) => {
@@ -70,12 +82,16 @@ export default function ChatForm() {
           type="text"
           placeholder="Type a message"
         />
-        <button type="submit">Send a message</button>
-      </form>
 
-      <IconButton>
-        <MdMic />
+        <IconButton component="label">
+          <MdAttachFile />
+          <VisuallyHiddenInput type="file" />
+        </IconButton>
+      </div>
+
+      <IconButton type="submit">
+        <IoMdSend />
       </IconButton>
-    </div>
+    </form>
   );
 }

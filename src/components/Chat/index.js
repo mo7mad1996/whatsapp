@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // css
-import css from "./style.module.css";
+import css from "./style.module.scss";
 
 // axios
 import axois from "axios";

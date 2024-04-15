@@ -17,7 +17,7 @@ import { socket } from "~/io";
 
 export default function Home() {
   // context
-  const { setUser_id } = useContext(AppContext);
+  const { setUser_id, currentChat } = useContext(AppContext);
 
   useEffect(() => {
     axios.get("/api/users/me").then(({ data }) => {
@@ -30,9 +30,9 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className="row">
       <Sidebar />
-      <Chat />
-    </>
+      {currentChat && <Chat />}
+    </div>
   );
 }

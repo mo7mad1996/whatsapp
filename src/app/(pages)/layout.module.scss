@@ -1,0 +1,68 @@
+$main_color: #7b6e61;
+
+.app {
+  display: flex;
+  height: 100dvh;
+  overflow: hidden;
+  flex-direction: column;
+
+  .app__body {
+    margin: auto;
+    max-width: 1300px;
+    width: 100%;
+    overflow: scroll;
+    flex: 1;
+
+    .page {
+      height: 100%;
+      display: flex;
+      gap: 1em;
+      flex-direction: column;
+
+      .Page_header {
+        display: flex;
+        padding-block: 1em;
+        border-bottom: 2px solid #d5cbc0;
+        align-items: center;
+        gap: 1em;
+
+        .icon {
+          font-size: 1.5em;
+        }
+
+        .form {
+          display: flex;
+          flex: 1;
+          padding: 0.3em 1em;
+          background-color: white;
+          border-radius: 10px;
+          font-size: 20px;
+          box-shadow: 0 0 10px 2px #aca8a821;
+
+          input {
+            border: none;
+            flex: 1;
+          }
+
+          button {
+            padding: 0.3em !important;
+            border-radius: 4px !important;
+          }
+        }
+
+        form button,
+        a {
+          cursor: pointer;
+          display: flex;
+          border: none;
+          gap: 1em;
+          align-items: center;
+          background-color: $main_color;
+          padding: 0.5em 2em;
+          border-radius: 10px;
+          color: white;
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 // css
-import css from "../style.module.css";
+import css from "../style.module.scss";
 
 // socket
 import { socket } from "~/io";
@@ -11,6 +11,12 @@ import { socket } from "~/io";
 // context
 import { AppContext } from "~/context";
 import { useContext } from "react";
+
+// ui
+import Avatar from "@mui/material/Avatar";
+
+// Moment
+import Moment from "~/moment";
 
 export default function Messages() {
   // data
@@ -46,19 +52,29 @@ export default function Messages() {
     <Message key={i} message={message} />
   ));
 
-  return <div className={css.chat__body}>{MessagesComponent}</div>;
+  return (
+    <div className={css.chat__body}>
+      <div>{MessagesComponent}</div>
+    </div>
+  );
 }
 
 // ..:: components ::..
 function Message({ message }) {
   return (
-    <p
+    <div
       className={`${css.chat__message} ${
-        !message.received && css.chat__reciever
+        message.received && css.chat__reciever
       }`}
     >
-      <span>{message.message}</span>
-      <span className={css.chat__timestamps}>{message.createdAt}</span>
-    </p>
+      <Avatar />
+
+      <div className={css.details}>
+        <p>{message.message}</p>
+        <span className={css.chat__timestamps}>
+          <Moment date={message.createdAt} format="LT" />
+        </span>
+      </div>
+    </div>
   );
 }

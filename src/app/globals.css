@@ -6,11 +6,24 @@ html {
 }
 
 * {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+
   box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  color: inherit;
+  text-decoration: none;
 }
 
 .mb-2 {
   margin-block: 1em;
+}
+
+.row {
+  display: flex;
+  gap: 1em;
+  max-height: 90%;
 }

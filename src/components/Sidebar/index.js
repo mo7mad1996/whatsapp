@@ -7,13 +7,13 @@ import css from "./style.module.css";
 
 const Sidebar = () => {
   return (
-    <div className={css.sidebar}>
+    <aside className={css.sidebar}>
       {/* header */}
       <Header />
 
       {/* chats */}
       <Chats />
-    </div>
+    </aside>
   );
 };
 
