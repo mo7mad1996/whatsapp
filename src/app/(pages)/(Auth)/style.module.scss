@@ -1,0 +1,19 @@
+.page {
+  flex: 1;
+  background-image: linear-gradient(90deg, transparent, white, transparent);
+  overflow: auto;
+  min-height: 100%;
+
+  .content {
+    max-width: 400px;
+    margin: auto;
+
+    > div > p {
+      margin: 1em;
+    }
+
+    a {
+      color: #7123ac;
+    }
+  }
+}
