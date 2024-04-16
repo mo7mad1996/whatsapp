@@ -5,6 +5,7 @@ export default function MainLayout({ children }) {
   return (
     <div className={css.app}>
       <Header />
+
       <div className={css.app__body}>{children}</div>
     </div>
   );
