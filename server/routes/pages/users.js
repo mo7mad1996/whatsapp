@@ -21,7 +21,7 @@ module.exports = (app) => {
     const user = await Users.findOne().or([{ username }, { email: username }]);
     if (!user) return res.status(401).send("username or password is wrong");
 
-    // 3) isvalid password
+    // 3) is valid password
     const ok = bcrypt.compare(req.body.password, user.password);
     if (!ok) return res.status(401).send("username or password is wrong");
 
