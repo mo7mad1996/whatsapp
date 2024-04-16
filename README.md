@@ -7,7 +7,7 @@ First, run the development server:
 to start
 
 ```bash
-npm nstall
+npm install
 ```
 
 ## _ Add the `.env` file to projects _
