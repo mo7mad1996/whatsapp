@@ -21,17 +21,17 @@ module.exports = (app) => {
     const user = await Users.findOne().or([{ username }, { email: username }]);
     if (!user) return res.status(401).send("username or password is wrong");
 
-    // 3) isvalid password
+    // 3) is valid password
     const ok = bcrypt.compare(req.body.password, user.password);
     if (!ok) return res.status(401).send("username or password is wrong");
 
-    // 4) reteun the tocken
+    // 4) return the token
     create_token(user, res);
   });
 
   // register
   app.post("/register", async (req, res) => {
-    // 1) genrate salt to hash password
+    // 1) generate salt to hash password
     const salt = await bcrypt.genSalt(10);
 
     // 2) hash password

@@ -41,7 +41,7 @@ module.exports = (app) => {
 
       io.on("connect", (socket) => IO(socket, io));
 
-      // start the applcation
+      // start the application
       server.listen(PORT, () => console.log("listen on port", PORT));
     })
     .catch((ex) => {
