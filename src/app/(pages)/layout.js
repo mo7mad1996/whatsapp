@@ -1,4 +1,7 @@
+// css
 import css from "./layout.module.scss";
+
+// components
 import Header from "~/components/layout/header";
 
 export default function MainLayout({ children }) {
