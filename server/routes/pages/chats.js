@@ -43,7 +43,10 @@ module.exports = (app) => {
     if (chat) res.json(chat._id);
     else {
       // 1) crate a new chat
-      const ch = await Chats.create({ between });
+      const ch = await Chats.create({
+        between,
+        createdBy: from_id,
+      });
       const chat = await ch.populate("between");
 
       // 2) create a new message
@@ -99,7 +102,7 @@ module.exports = (app) => {
 
   app.get("/:id", (req, res) => {
     Chats.findById(req.params.id)
-      .populate(["between", "messages"])
+      .populate(["between", "messages", "createdBy"])
       .then((chat) => res.json(chat));
   });
 

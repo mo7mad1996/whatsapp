@@ -7,6 +7,7 @@ import axios from "axios";
 // components
 import Chat from "~/components/Chat";
 import Sidebar from "~/components/Sidebar";
+import Info from "~/components/Info";
 
 // context
 import { useContext } from "react";
@@ -17,7 +18,7 @@ import { socket } from "~/io";
 
 export default function Home() {
   // context
-  const { setUser_id, currentChat } = useContext(AppContext);
+  const { setUser_id, currentChat, chatinfo } = useContext(AppContext);
 
   useEffect(() => {
     axios.get("/api/users/me").then(({ data }) => {
@@ -33,6 +34,7 @@ export default function Home() {
     <div className="row">
       <Sidebar />
       {currentChat && <Chat />}
+      {chatinfo && <Info />}
     </div>
   );
 }

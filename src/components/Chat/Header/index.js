@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // UI
 import Avatar from "@mui/material/Avatar";
@@ -15,11 +15,17 @@ import { MdOutlineMoreVert } from "react-icons/md";
 // css
 import css from "../style.module.scss";
 
+// Reducer
+import { useContext } from "react";
+import { AppContext } from "~/context";
+
 export default function ChatHeader({ lastseen, name }) {
+  // data
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  useEffect(() => console.log(anchorEl), [anchorEl]);
+  // context
+  const { setChatinfo } = useContext(AppContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,6 +34,14 @@ export default function ChatHeader({ lastseen, name }) {
     setAnchorEl(null);
   };
   const select = (option) => {
+    switch (option) {
+      case "Chat":
+        setChatinfo((o) => !o);
+        break;
+
+      default:
+    }
+
     handleClose();
   };
 

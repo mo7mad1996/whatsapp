@@ -7,6 +7,7 @@ export function Provider({ children }) {
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState();
   const [user_id, setUser_id] = useState("");
+  const [chatinfo, setChatinfo] = useState(false);
 
   const state = {
     // chats
@@ -18,6 +19,10 @@ export function Provider({ children }) {
     // user
     user_id,
     setUser_id,
+
+    // chatinfo
+    chatinfo,
+    setChatinfo,
   };
 
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>;

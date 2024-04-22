@@ -4,6 +4,7 @@ const schema = mongoose.Schema(
   {
     between: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
     last_message: { type: mongoose.Schema.Types.ObjectId, ref: "messages" },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
     messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "messages" }],
     name: { type: String },
   },

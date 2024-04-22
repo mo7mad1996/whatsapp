@@ -17,7 +17,8 @@ export default function SidebarChat({ chat, last_message, between, _id }) {
   const [name, setName] = useState("");
 
   // context
-  const { setCurrentChat, currentChat, user_id } = useContext(AppContext);
+  const { setCurrentChat, currentChat, user_id, setChatinfo } =
+    useContext(AppContext);
 
   // on component created
   useEffect(() => {
@@ -37,8 +38,12 @@ export default function SidebarChat({ chat, last_message, between, _id }) {
   // JSX
   return (
     <div
-      className={`${css.sidebarChat} ${currentChat?._id === _id && css.active}`}
-      onClick={() => setCurrentChat(chat._id)}
+      className={`${css.sidebarChat} ${currentChat === _id && css.active}`}
+      onClick={() => {
+        setCurrentChat(chat._id);
+
+        setChatinfo(false);
+      }}
     >
       <Avatar />
 

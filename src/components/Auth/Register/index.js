@@ -42,6 +42,7 @@ export default function RegisterForm() {
       key={key}
       id={key}
       label={key}
+      type={key}
       required
       value={user[key]}
       onChange={(e) => setUser({ ...user, [key]: e.target.value })}
