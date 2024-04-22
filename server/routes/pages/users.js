@@ -42,27 +42,21 @@ module.exports = (app) => {
       ...req.body,
       password,
     })
-      .then(async (user) => {
-        const chat = await Chats.create({ between: [user._id, user._id] });
-        Users.findByIdAndUpdate(user._id, { $push: { chats: chat._id } }).then(
-          () => create_token(user, res)
-        );
-      })
+      .then((user) => create_token(user, res))
       .catch(() =>
         res.status(500).send("can't add new user, do you have account?")
       );
   });
 
   app.post("/search", (req, res) => {
-    Users.find()
-      .find({
-        $or: [
-          { name: { $regex: req.body.search } },
-          { username: { $regex: req.body.search } },
-          { email: { $regex: req.body.search } },
-        ],
-      })
-      .select("name")
+    Users.find({
+      $or: [
+        { name: { $regex: req.body.search } },
+        { username: { $regex: req.body.search } },
+        { email: { $regex: req.body.search } },
+      ],
+    })
+      .select(["name", "image"])
       .then((d) => res.json(d));
   });
 

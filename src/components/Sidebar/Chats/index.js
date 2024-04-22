@@ -37,21 +37,28 @@ export default function SidebarChats() {
   }, []);
 
   useEffect(() => {
-    socket.on("new message", (message, id) => {
+    socket.on("new message", (message, chat) => {
       setChats((prevChats) => {
-        const index = prevChats.findIndex((c) => c._id === id);
+        const index = prevChats.findIndex((c) => c._id === chat._id);
 
         if (index !== -1) {
           const updatedChat = { ...prevChats[index], last_message: message };
+
           const updatedChats = [
             updatedChat,
             ...prevChats.slice(0, index),
             ...prevChats.slice(index + 1),
           ];
-          return updatedChats;
-        }
 
-        return prevChats;
+          return updatedChats;
+        } else {
+          const newchat = {
+            ...chat,
+            last_message: message,
+          };
+
+          return [newchat, ...prevChats];
+        }
       });
     });
   }, []);

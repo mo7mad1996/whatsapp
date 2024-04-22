@@ -18,10 +18,10 @@ import Avatar from "@mui/material/Avatar";
 // Moment
 import Moment from "~/moment";
 
-export default function Messages() {
+export default function Messages({ chat }) {
   // data
   const [messages, updateMessage] = useState([]);
-  const { user_id, currentChat } = useContext(AppContext);
+  const { user_id } = useContext(AppContext);
 
   // on create component
   useEffect(() => {
@@ -38,14 +38,16 @@ export default function Messages() {
   }, []);
 
   useEffect(() => {
-    updateMessage(
-      currentChat.messages.map((msg) => ({
-        received: user_id !== msg.from,
-        message: msg.message,
-        createdAt: msg.createdAt,
-      }))
-    );
-  }, [currentChat]);
+    if (chat) {
+      updateMessage(
+        chat.messages.map((msg) => ({
+          received: user_id !== msg.from,
+          message: msg.message,
+          createdAt: msg.createdAt,
+        }))
+      );
+    }
+  }, [chat]);
 
   // components
   const MessagesComponent = messages.map((message, i) => (

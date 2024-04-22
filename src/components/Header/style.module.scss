@@ -17,13 +17,16 @@
       padding: 0.5em 1em;
       cursor: pointer;
       border-bottom: 1px solid #ddd;
+      display: flex;
+      gap: 1em;
+      align-items: center;
 
       &:last-of-type {
         border-bottom: none;
       }
 
       &:hover {
-        filter: brightness(80%);
+        background-color: #ddd;
       }
     }
   }

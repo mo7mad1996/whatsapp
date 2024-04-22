@@ -5,6 +5,8 @@ import { AiOutlineShopping } from "react-icons/ai";
 // css
 import css from "./style.module.scss";
 
+import Link from "next/link";
+
 export default function Header() {
   return (
     <header className={css.header}>
@@ -14,7 +16,7 @@ export default function Header() {
       </nav>
 
       <div>
-        <a href="#">Logo</a>
+        <Link href="/">Logo</Link>
       </div>
       <nav>
         <a href="#">Reviews</a>

@@ -5,8 +5,9 @@ import scss from "./style.module.scss";
 // icons
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
 import { AiTwotonePlusCircle } from "react-icons/ai";
-import Link from "next/link";
 
+import { Avatar } from "@mui/material";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 // axios
@@ -15,6 +16,7 @@ import axios from "axios";
 // context
 import { useContext } from "react";
 import { AppContext } from "~/context";
+
 export default function Header({ css }) {
   // data
   const [search, setSearch] = useState("");
@@ -34,11 +36,10 @@ export default function Header({ css }) {
 
   // methods
   function startChat(id) {
-    axios.post("/api/chats/to", { id }).then(({ data }) => {
-      setCurrentChat(data);
-    });
-
-    setSearch("");
+    // axios.post("/api/chats/to", { id }).then(({ data }) => {
+    //   setCurrentChat(data);
+    // });
+    // setSearch("");
   }
 
   return (
@@ -67,7 +68,8 @@ export default function Header({ css }) {
           {search_result.length ? (
             search_result.map((user) => (
               <li key={user._id} onClick={(_) => startChat(user._id)}>
-                {user.name}
+                <Avatar sx={{ width: 30, height: 30 }} src={user.image} />
+                <span>{user.name}</span>
               </li>
             ))
           ) : (

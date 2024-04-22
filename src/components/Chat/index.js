@@ -31,30 +31,41 @@ export default function AppChat() {
 }
 
 // ..:: small components ::..
-function Chat({ chat }) {
-  // data
-  const [user, setUser] = useState({});
+function Chat({ chat: _id }) {
+  // context
   const { user_id } = useContext(AppContext);
 
-  // update header
+  // data
+  const [user, setUser] = useState({});
+  const [chat, setChat] = useState();
+
+  // ..:: update header ::..
+  // get the chat
+  useEffect(() => {
+    axois.get(`/api/chats/${_id}`).then((res) => setChat(res.data));
+  }, [_id]);
+
   // get user from chat.between
   useEffect(() => {
-    const users = chat.between.filter((u) => u._id != user_id);
+    if (chat) {
+      if (chat.name) return setUser(chat.name);
 
-    if (users.length) setUser(users[0]);
-    else setUser({ name: chat.between[0].name + " (You)" });
+      const users = chat.between.filter((u) => u._id != user_id);
+      if (users.length) setUser(users[0]);
+      else setUser({ name: chat.between[0].name + " (You)" });
+    }
   }, [chat]); // chat from props
 
+  // join to chat room
   useEffect(() => {
-    // join to chat room
-    socket.emit("join", chat._id);
-  }, [chat]);
+    socket.emit("join", _id);
+  }, [_id]);
 
   // JSX
   return (
     <>
       <Header {...user} />
-      <Messages />
+      <Messages chat={chat} />
       <Form />
     </>
   );

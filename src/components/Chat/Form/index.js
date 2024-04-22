@@ -36,7 +36,7 @@ const VisuallyHiddenInput = styled("input")({
 export default function ChatForm() {
   // data
   const [input, setInput] = useState("");
-  const { currentChat, user_id, setChats, chats } = useContext(AppContext);
+  const { currentChat, user_id } = useContext(AppContext);
 
   // methods
   function submit(e) {
@@ -46,26 +46,11 @@ export default function ChatForm() {
     const message = {
       message: input,
       from: user_id,
-      chat_id: currentChat._id,
+      chat_id: currentChat,
     };
 
     // save this message
-    if (input.trim())
-      socket.emit("send message", message, currentChat, (message, id) => {
-        setChats((prevChats) => {
-          const index = prevChats.findIndex((c) => c._id === id);
-
-          if (index !== -1) {
-            const updatedChat = { ...prevChats[index], last_message: message };
-            const updatedChats = [
-              updatedChat,
-              ...prevChats.slice(0, index),
-              ...prevChats.slice(index + 1),
-            ];
-            return updatedChats;
-          }
-        });
-      });
+    if (input.trim()) socket.emit("send message", message, currentChat);
 
     setInput("");
   }

@@ -27,6 +27,7 @@ module.exports = (app) => {
 
       // socket.io server
       const io = socketio(server);
+      process.io = io; // Set io as a property of the process object
 
       io.use((socket, next) => {
         const user_id = socket.handshake.auth.user_id;

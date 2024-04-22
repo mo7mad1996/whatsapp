@@ -13,6 +13,7 @@ const schema = new mongoose.Schema({
   password: { type: String, required: true },
   chats: [{ type: mongoose.Schema.Types.ObjectId, ref: "chats" }],
   lastseen: { type: Date },
+  image: { type: String },
 });
 
 module.exports = mongoose.model("user", schema);

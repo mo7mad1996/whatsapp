@@ -21,20 +21,24 @@ export default function SidebarChat({ chat, last_message, between, _id }) {
 
   // on component created
   useEffect(() => {
-    const usersName = between
-      .filter((u) => u._id != user_id)
-      .map((u) => u.name);
+    if (between) {
+      const usersName = between
+        .filter((u) => u._id != user_id)
+        .map((u) => u.name);
 
-    let chatName = usersName.length ? usersName[0] : between[0].name + " (You)";
+      let chatName = usersName.length
+        ? usersName[0]
+        : between[0].name + " (You)";
 
-    setName(chatName);
-  }, []);
+      setName(chatName);
+    }
+  }, [between]);
 
   // JSX
   return (
     <div
       className={`${css.sidebarChat} ${currentChat?._id === _id && css.active}`}
-      onClick={() => setCurrentChat(chat)}
+      onClick={() => setCurrentChat(chat._id)}
     >
       <Avatar />
 

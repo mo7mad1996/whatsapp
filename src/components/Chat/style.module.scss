@@ -10,6 +10,8 @@ $br: 1.2em;
   display: flex;
   flex-direction: column;
 
+  min-height: 500px;
+
   // header
   .chat__header {
     background-color: white;
