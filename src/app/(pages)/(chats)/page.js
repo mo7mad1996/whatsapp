@@ -9,6 +9,9 @@ import Chat from "~/components/Chat";
 import Sidebar from "~/components/Sidebar";
 import Info from "~/components/Info";
 
+// css
+import css from "../layout.module.scss";
+
 // context
 import { useContext } from "react";
 import { AppContext } from "~/context";
@@ -31,7 +34,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="row">
+    <div className={css.row}>
       <Sidebar />
       {currentChat && <Chat />}
       {chatinfo && <Info />}

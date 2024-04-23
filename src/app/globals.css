@@ -21,9 +21,3 @@ html {
 .mb-2 {
   margin-block: 1em;
 }
-
-.row {
-  display: flex;
-  gap: 1em;
-  max-height: 90%;
-}

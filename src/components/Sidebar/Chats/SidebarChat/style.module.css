@@ -5,6 +5,9 @@
   border-bottom: 1px solid #dfd7cf;
   background-color: white;
 }
+.sidebarChat:last-of-type {
+  border-bottom: none;
+}
 .sidebarChat.active {
   border-inline-start: 5px solid #814b00;
 }

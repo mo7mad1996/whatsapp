@@ -59,12 +59,14 @@ export default function ChatForm() {
   return (
     <form onSubmit={submit}>
       <div className={css.edit}>
-        <input
+        <textarea
           value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
+          onKeyPress={(e) => {
+            if (e.key == "Enter" && !e.shiftKey) return submit(e);
           }}
+          onChange={(e) => setInput(e.target.value)}
           type="text"
+          rows={1}
           placeholder="Type a message"
         />
 

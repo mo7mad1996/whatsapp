@@ -14,10 +14,20 @@ $main_color: #7b6e61;
     flex: 1;
 
     .page {
+      flex: 1;
       height: 100%;
       display: flex;
       gap: 1em;
       flex-direction: column;
+      overflow: hidden;
+
+      .row {
+        flex: 1;
+        align-items: flex-start;
+        display: flex;
+        overflow: hidden;
+        gap: 1em;
+      }
 
       .Page_header {
         display: flex;
